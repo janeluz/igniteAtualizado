@@ -1,0 +1,8 @@
+1- opção add type module
+2 vdd
+3 Para realizar requisições http
+
+
+stateful = guarda dados em memoria
+
+stateles= guarda em dispositivos externos

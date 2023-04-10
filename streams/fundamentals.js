@@ -3,13 +3,14 @@
 // process.stdin
 // .pipe(process.stdout);
 
-import { Readable} from 'node:stream'
+import { write } from 'node:fs'
+import { Readable, Writable, Transform} from 'node:stream'
 
 class OneToHundredStream extends Readable {
     index = 1
-
+    //retorna qual os dados dessa stream
     _read() {
-        const i= this.index==
+        const i= this.index++
         setTimeout(()=>{
         if( i>100){
             this.push(null)
@@ -21,6 +22,23 @@ class OneToHundredStream extends Readable {
     }
 
 }
+
+class MultiplyByTenStream extends Writable{
+    _write(chunk,encoding,callback) {
+        console.log(Number(chunk.toString()) *10)
+        callback()
+    }
+}
+
+class InverseNumberStream extends Transform {
+    _transform(chunk,encoding,callback) {
+        const transformed = Number(chunk.toString())* -1
+
+        callback(null, Buffer.from(String(transformed)))
+    }
+}
     new OneToHundredStream()
+    .pipe(new InverseNumberStream())
     .pipe(process.stdout)
+
 

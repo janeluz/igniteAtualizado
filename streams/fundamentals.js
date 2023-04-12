@@ -12,7 +12,7 @@ class OneToHundredStream extends Readable {
     _read() {
         const i= this.index++
         setTimeout(()=>{
-        if( i>5){
+        if( i>100){
             this.push(null)
          } else {
             const buf = Buffer.from(String(i))
@@ -39,6 +39,6 @@ class InverseNumberStream extends Transform {
 }
     new OneToHundredStream()
     .pipe(new InverseNumberStream())
-    .pipe(process.stdout)
+    .pipe(new MultiplyByTenStream())
 
 

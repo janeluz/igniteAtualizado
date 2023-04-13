@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "node streams/fundamentals.js"
+    "dev": "node --watch src/server.js"
   }
 }
 

@@ -18,8 +18,17 @@ export class Database {
     fs.writeFile('db.json', JSON.stringify(this.#database))
   }
 
-  select(table) {
+  select(table,search) {
     const data = this.#database[table] ?? []
+
+    if(search) {
+      data = data.filter(row => {
+        //Object.entries para converter em array, o some vai percorrer o array e se pelo menos 1 vez a condição for true 
+        return Object.entries(search).some(([key,value]) => {
+          return row [key].includes(value)
+        })
+      })
+    }
 
     return data
   }
@@ -38,7 +47,7 @@ export class Database {
     const rowIndex = this.#database[table].findIndex(row.id === id)
 
     if(rowIndex > -1) {
-      this.#database[table] = {id, ...data}
+      this.#database[table][rowIndex] = {id, ...data}
       this.#persist()
     }
   }
